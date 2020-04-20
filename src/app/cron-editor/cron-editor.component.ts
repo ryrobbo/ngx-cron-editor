@@ -420,11 +420,11 @@ export class CronGenComponent implements OnInit, OnChanges {
       this.state.hourly.hours = parseInt(hours.substring(2));
       this.state.hourly.minutes = parseInt(minutes);
       this.state.hourly.seconds = parseInt(seconds);
-    } else if (cron.match(/\d+ \d+ \d+ 1\/\d+ \* [\?\*] \*/)) {
+    } else if (cron.match(/\d+ \d+ \d+ 1\/\d+ \* [\?\*] \*/) || cron.match(/\d+ \d+ \d+ \* \* [\?\*] \*/)) {
       this.activeTab = 'daily';
 
       this.state.daily.subTab = 'everyDays';
-      this.state.daily.everyDays.days = parseInt(dayOfMonth.substring(2));
+      this.state.daily.everyDays.days = (dayOfMonth === '*') ? 1 : parseInt(dayOfMonth.substring(2));
       const parsedHours = parseInt(hours);
       this.state.daily.everyDays.hours = this.getAmPmHour(parsedHours);
       this.state.daily.everyDays.hourType = this.getHourType(parsedHours);
